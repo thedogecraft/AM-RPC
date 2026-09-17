@@ -10,7 +10,9 @@
         MaxHeight="600"
         CanResize="False"
         WindowStartupLocation="CenterOwner" 
-        Icon="/Assets/icon.ico">
+        Icon="/Assets/icon.ico"
+        TransparencyLevelHint="Mica"
+        Background="Transparent">
     <StackPanel Margin="24" Spacing="16">
         <TextBlock Text="Settings" FontSize="20" FontWeight="SemiBold"/>
 

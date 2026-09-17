@@ -8,6 +8,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using Windows.Storage.Streams;
 using AM_RPC.Models;
@@ -176,9 +177,11 @@ public partial class App : Application
         exitItem.Click += (_, _) => ExitApplication();
         menu.Add(exitItem);
 
+        using var iconStream = AssetLoader.Open(new Uri("avares://AM-RPC/Assets/icon.ico"));
+
         var tray = new TrayIcon
         {
-            Icon = new WindowIcon("Assets/icon.ico"),
+            Icon = new WindowIcon(iconStream),
             ToolTipText = "Apple Music RPC",
             Menu = menu,
             IsVisible = true,
