@@ -19,7 +19,7 @@ public partial class App : Application
 {
     private readonly Settings _settings = SettingsStore.Load();
     private MediaWatcher _watcher = null!;
-    private DiscordRpc _rpc = null!;
+    private DiscordPresence _discord = null!;
     private ArtworkResolver _artworks = null!;
     private MainWindow _mainWindow = null!;
     private TrackInfo? _currentTrack;
@@ -39,7 +39,7 @@ public partial class App : Application
             _mainWindow.Closing += OnMainWindowClosing;
             _mainWindow.SettingsRequested += OnSettingsRequested;
 
-            _rpc = new DiscordRpc();
+            _discord = new DiscordPresence();
             _artworks = new ArtworkResolver();
             _watcher = new MediaWatcher();
             _watcher.TrackInfoChanged += OnTrackInfoChanged;
@@ -110,7 +110,7 @@ public partial class App : Application
             if (track != null && _settings.ShowArtwork)
                 artwork = await _artworks.ResolveAsync(track.Title, track.Artist).ConfigureAwait(false);
 
-            await _rpc.UpdateAsync(track, _settings.DiscordAppId, artwork, _settings.ShowProgress).ConfigureAwait(false);
+            await _discord.UpdateAsync(track, _settings.DiscordAppId, artwork, _settings.ShowProgress).ConfigureAwait(false);
         }
         catch
         {
@@ -124,10 +124,13 @@ public partial class App : Application
 
         ApplyCurrentState();
 
-        if (!_settings.Enabled && !string.IsNullOrWhiteSpace(_settings.DiscordAppId))
-            await _rpc.UpdateAsync(null, _settings.DiscordAppId, null, _settings.ShowProgress).ConfigureAwait(false);
-        else
-            await PushPresenceAsync(_currentTrack).ConfigureAwait(false);
+        if (!_settings.Enabled)
+        {
+            _discord.Dispose();
+            return;
+        }
+
+        await PushPresenceAsync(_currentTrack).ConfigureAwait(false);
     }
 
     private void ApplyCurrentState()
@@ -241,7 +244,7 @@ public partial class App : Application
     {
         _exiting = true;
         _watcher?.Stop();
-        _rpc?.Dispose();
+        _discord.Dispose();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.Shutdown();
@@ -252,6 +255,6 @@ public partial class App : Application
     private void OnExit(object? sender, EventArgs e)
     {
         _watcher?.Stop();
-        _rpc?.Dispose();
+        _discord.Dispose();
     }
 }
