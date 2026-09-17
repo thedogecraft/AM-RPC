@@ -178,7 +178,7 @@ public partial class App : Application
 
         var tray = new TrayIcon
         {
-            Icon = CreateTrayIcon(),
+            Icon = new WindowIcon("Assets/icon.ico"),
             ToolTipText = "Apple Music RPC",
             Menu = menu,
             IsVisible = true,
@@ -188,38 +188,38 @@ public partial class App : Application
         TrayIcon.SetIcons(this, new TrayIcons { tray });
     }
 
-    private static WindowIcon CreateTrayIcon()
-    {
-        const int size = 64;
-        using var bitmap = new RenderTargetBitmap(new PixelSize(size, size), new Vector(96, 96));
-        using (var context = bitmap.CreateDrawingContext())
-        {
-            var brush = new LinearGradientBrush
-            {
-                StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
-                EndPoint = new RelativePoint(1, 1, RelativeUnit.Relative),
-                GradientStops =
-                {
-                    new GradientStop(Color.Parse("#FF4D5A"), 0),
-                    new GradientStop(Color.Parse("#FA243C"), 1),
-                },
-            };
+    // private static WindowIcon CreateTrayIcon()
+    // {
+    //     const int size = 64;
+    //     using var bitmap = new RenderTargetBitmap(new PixelSize(size, size), new Vector(96, 96));
+    //     using (var context = bitmap.CreateDrawingContext())
+    //     {
+    //         var brush = new LinearGradientBrush
+    //         {
+    //             StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
+    //             EndPoint = new RelativePoint(1, 1, RelativeUnit.Relative),
+    //             GradientStops =
+    //             {
+    //                 new GradientStop(Color.Parse("#FF4D5A"), 0),
+    //                 new GradientStop(Color.Parse("#FA243C"), 1),
+    //             },
+    //         };
 
-            context.DrawRectangle(brush, null, new RoundedRect(new Rect(0, 0, size, size), size * 0.24));
+    //         context.DrawRectangle(brush, null, new RoundedRect(new Rect(0, 0, size, size), size * 0.24));
 
-            var text = new FormattedText(
-                "\u266A",
-                CultureInfo.InvariantCulture,
-                FlowDirection.LeftToRight,
-                new Typeface("Segoe UI Symbol"),
-                size * 0.62,
-                new SolidColorBrush(Colors.White));
+    //         var text = new FormattedText(
+    //             "\u266A",
+    //             CultureInfo.InvariantCulture,
+    //             FlowDirection.LeftToRight,
+    //             new Typeface("Segoe UI Symbol"),
+    //             size * 0.62,
+    //             new SolidColorBrush(Colors.White));
 
-            context.DrawText(text, new Point((size - text.Width) / 2, (size - text.Height) / 2 - 2));
-        }
+    //         context.DrawText(text, new Point((size - text.Width) / 2, (size - text.Height) / 2 - 2));
+    //     }
 
-        return new WindowIcon(bitmap);
-    }
+    //     return new WindowIcon(bitmap);
+    // }
 
     private void ShowMainWindow()
     {

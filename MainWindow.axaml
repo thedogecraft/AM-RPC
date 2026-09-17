@@ -8,7 +8,8 @@
         Width="520" Height="300"
         MinWidth="520" MinHeight="300"
         CanResize="False"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="/Assets/icon.ico">
     <DockPanel Margin="24">
         <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
             <TextBlock Text="Apple Music RPC" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
