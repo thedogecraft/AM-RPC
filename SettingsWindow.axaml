@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="440" d:DesignHeight="360"
+        x:Class="AM_RPC.SettingsWindow"
+        Title="Settings"
+        Width="440"
+        SizeToContent="Height"
+        MaxHeight="600"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="24" Spacing="16">
+        <TextBlock Text="Settings" FontSize="20" FontWeight="SemiBold"/>
+
+        <StackPanel Spacing="12">
+            <CheckBox x:Name="EnabledCheck" Content="Enable Discord Rich Presence"/>
+            <CheckBox x:Name="ArtworkCheck" Content="Show album artwork"/>
+            <CheckBox x:Name="ProgressCheck" Content="Show track progress"/>
+        </StackPanel>
+
+        <StackPanel Spacing="6">
+            <TextBlock Text="Discord Application ID" FontSize="13" Foreground="#C9CDD3"/>
+            <TextBox x:Name="AppIdBox" PlaceholderText="Paste your application ID here"/>
+            <TextBlock Text="Create an app at discord.com/developers, enable Rich Presence, then paste its Application ID (a number)."
+                       FontSize="12" Foreground="#8A8F98" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+            <Button Content="Cancel" Click="OnCancelClicked" MinWidth="84" Padding="12,8" CornerRadius="8"/>
+            <Button Content="Save" Click="OnSaveClicked" MinWidth="84" Padding="12,8" CornerRadius="8"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
